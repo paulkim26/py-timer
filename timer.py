@@ -4,15 +4,15 @@ import time
 #settings
 time_limit = 60 #0-60 minutes
 update_frequency = 0.03 #seconds, 0 = uncapped
-font_path = "c:/users/<username>/appdata/local/microsoft/windows/fonts/<fontname>.otf" #path to font file
-font_size = 300
-screen_width = 1920
-screen_height = 1080
-screen_fullscreen = True
+font_path = "c:/users/<username>/appdata/local/microsoft/windows/fonts/<font name>.otf" #path to font file
+font_size = 150
+screen_width = 800
+screen_height = 300
+screen_fullscreen = False
 
 #initialize
 pygame.init()
-pygame.display.set_caption("Timer")
+pygame.display.set_caption("py-timer")
 pygame.mouse.set_visible(False)
 if screen_fullscreen:
     screen = pygame.display.set_mode((screen_width,screen_height), pygame.FULLSCREEN)
@@ -28,7 +28,12 @@ run = True
 state_play = False
 
 #load font
-font = pygame.font.Font(font_path, font_size)
+try:
+    font = pygame.font.Font(font_path, font_size)
+except Exception as e:
+    print("There was a problem loading the specified font. Please check and try again.")
+    print(e)
+    run = False
 
 #main
 while run:
@@ -38,43 +43,44 @@ while run:
             run = False
 
         #keyboard input
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_ESCAPE]:
-            run = False
+        elif event.type == pygame.KEYDOWN:
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_ESCAPE]:
+                run = False
 
-        if keys[pygame.K_SPACE]:
-            if state_play:
-                #pause
-                state_play = False
-            else:
-                #play
-                state_play = True
-                start = time.time()
-                ms_initial = ms_remaining
+            if keys[pygame.K_SPACE]:
+                if state_play:
+                    #pause
+                    state_play = False
+                else:
+                    #play
+                    state_play = True
+                    start = time.time()
+                    ms_initial = ms_remaining
 
-        if keys[pygame.K_r]:
-            #reset
-            ms_remaining = ms_initial_constant
-            state_play = False
-
-        minutes_scan = 1
-        if keys[pygame.K_LSHIFT]:
-            #fast modifier
-            minutes_scan = 3
-
-        if keys[pygame.K_LEFT]:
-            #rewind
-            ms_remaining = ms_remaining + 1000 * 60 * minutes_scan
-            if ms_remaining > ms_initial_constant:
+            if keys[pygame.K_r]:
+                #reset
                 ms_remaining = ms_initial_constant
-            state_play = False
+                state_play = False
 
-        if keys[pygame.K_RIGHT]:
-            #fast forward
-            ms_remaining = ms_remaining - 1000 * 60 * minutes_scan
-            if ms_remaining < 0:
-                ms_remaining = 0
-            state_play = False
+            minutes_scan = 1
+            if keys[pygame.K_LSHIFT]:
+                #fast modifier
+                minutes_scan = 3
+
+            if keys[pygame.K_LEFT]:
+                #rewind
+                ms_remaining = ms_remaining + 1000 * 60 * minutes_scan
+                if ms_remaining > ms_initial_constant:
+                    ms_remaining = ms_initial_constant
+                state_play = False
+
+            if keys[pygame.K_RIGHT]:
+                #fast forward
+                ms_remaining = ms_remaining - 1000 * 60 * minutes_scan
+                if ms_remaining < 0:
+                    ms_remaining = 0
+                state_play = False
 
     if state_play:
         #calculate elapsed time since start
