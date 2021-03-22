@@ -1,7 +1,7 @@
 # py-timer
 
 ## Introduction
-![preview](demo/demo.gif)
+![preview](preview/preview.gif)
 
 `py-timer` is a configurable Python script that displays an on-screen timer. Uses the `pygame` set of modules to render the timer text. Includes controls to pause, play, reset, and fast forward the timer.
 
