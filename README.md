@@ -18,7 +18,7 @@ Shows the time remaining as `mm:ss:hhh` where:
 - [pygame](www.pygame.org) `v1.9.4` or higher ([installation instructions](https://www.pygame.org/wiki/GettingStarted))
 
 ## Setup
-Requires an OTF font to be installed for rendering the timer text. The suggested font is [Digital Dismay](https://www.dafont.com/digital-dismay.font).
+Requires an OTF font to be installed for rendering the timer text. The suggested font is [Digital Dismay](https://www.dafont.com/digital-dismay.font). Next, update the variable `font_path` as appropriate.
 
 ## Configuration
 | Variable | Description |
